@@ -760,3 +760,11 @@ export async function checkActionVersion(version: string) {
 export function isInTestMode(): boolean {
   return process.env["TEST_MODE"] === "true" || false;
 }
+
+/**
+ * @returns true if the action should generate a conde-scanning config file
+ * that gets passed to the CLI.
+ */
+export function useCodeScanningConfigInCli(): boolean {
+  return process.env["CODEQL_PASS_CONFIG_TO_CLI"] === "true" || false;
+}

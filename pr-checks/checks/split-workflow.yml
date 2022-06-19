@@ -18,6 +18,10 @@ steps:
       output: "${{ runner.temp }}/results"
     env:
       TEST_MODE: true
+
+  - name: User config
+    run: cat "${{ runner.temp }}/user-config.yaml"
+
   - name: Assert No Results
     shell: bash
     run: |

@@ -1,0 +1,41 @@
+# Tests for how the CLI processes the codescanning config file.
+name: Code-Scanning config CLI tests
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches:
+    - main
+    - releases/v1
+    - releases/v2
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - ready_for_review
+  workflow_dispatch: {}
+
+jobs:
+  code-scanning-config-tests:
+    # Code-Scanning config not created because environment variable is not set
+    name: Code Scanning Configuration tests
+    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+    - name: Prepare test
+      id: prepare-test
+      uses: ./.github/prepare-test
+      with:
+        version: latest
+
+    - uses: ./../action/.github/check-codescanning-config
+      with:
+        config-file-location: ${{ runner.temp }}/user-config.yaml
+        expected-config-file-contents: |
+          {}
+        languages: javascript
+        tools: ${{ steps.prepare-test.outputs.tools-url }}
