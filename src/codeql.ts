@@ -86,7 +86,8 @@ export interface CodeQL {
     sourceRoot: string,
     processName: string | undefined,
     processLevel: number | undefined,
-    featureFlags: FeatureFlags
+    featureFlags: FeatureFlags,
+    logger?: Logger
   ): Promise<void>;
   /**
    * Runs the autobuilder for the given language.
@@ -732,7 +733,8 @@ async function getCodeQLForCmd(
       sourceRoot: string,
       processName: string | undefined,
       processLevel: number | undefined,
-      featureFlags: FeatureFlags
+      featureFlags: FeatureFlags,
+      logger?: Logger
     ) {
       const extraArgs = config.languages.map(
         (language) => `--language=${language}`
@@ -759,7 +761,9 @@ async function getCodeQLForCmd(
       }
 
       const configLocation = await generateCodescanningConfig(codeql, config);
+      logger?.info(`Generated config at ${configLocation}`);
       if (configLocation) {
+        logger?.info(fs.readFileSync(configLocation, "utf-8"));
         extraArgs.push(`--codescanning-config=${configLocation}`);
       }
 

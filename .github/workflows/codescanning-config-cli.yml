@@ -23,6 +23,8 @@ jobs:
     name: Code Scanning Configuration tests
     timeout-minutes: 45
     runs-on: ubuntu-latest
+    env:
+      CODEQL_PASS_CONFIG_TO_CLI: true
     steps:
     - name: Check out repository
       uses: actions/checkout@v3

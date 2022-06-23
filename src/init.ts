@@ -88,10 +88,11 @@ export async function runInit(
   sourceRoot: string,
   processName: string | undefined,
   processLevel: number | undefined,
-  featureFlags: FeatureFlags
+  featureFlags: FeatureFlags,
+  logger?: Logger
 ): Promise<TracerConfig | undefined> {
   fs.mkdirSync(config.dbLocation, { recursive: true });
-
+  logger?.info(JSON.stringify(config, null, 2));
   try {
     if (await codeQlVersionAbove(codeql, CODEQL_VERSION_NEW_TRACING)) {
       // Init a database cluster
@@ -100,7 +101,8 @@ export async function runInit(
         sourceRoot,
         processName,
         processLevel,
-        featureFlags
+        featureFlags,
+        logger
       );
     } else {
       for (const language of config.languages) {
