@@ -57,7 +57,7 @@
     "@types/long": "5.0.0",
     "@types/node": "20.10.5",
     "@types/semver": "^7.3.8",
-    "@types/sinon": "^10.0.2",
+    "@types/sinon": "^17.0.3",
     "@typescript-eslint/parser": "^5.0.0",
     "ava": "^5.1.0",
     "eslint": "^7.32.0",
